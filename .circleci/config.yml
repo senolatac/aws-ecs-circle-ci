@@ -43,7 +43,7 @@ jobs:
             docker push $FULL_IMAGE_NAME
   update:
     docker:
-      - image: circleci/openjdk:8-jdk
+      - image: circleci/openjdk:11-jdk
     steps:
       - run:
           name: Install dependencies for AWS
@@ -57,7 +57,7 @@ jobs:
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]
             then
-               aws ecs update-service --cluster qa-ecs-cluster --service search-ecs-service-qa --force-new-deployment
+               aws ecs update-service --cluster qa-demo-ecs-cluster --service search-ecs-service-qa --force-new-deployment
             elif [ "${CIRCLE_BRANCH}" == "release" ]
             then
               aws ecs update-service --cluster prod-ecs-cluster --service search-ecs-service-prod --force-new-deployment

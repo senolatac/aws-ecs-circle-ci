@@ -1,5 +1,6 @@
 package com.example.awsecscircleci.controller;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,6 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController
 {
+
+    @Value("${custom.ecs.variable}")
+    private int customEcsVariable;
+
     @GetMapping("/test")
     public String testMethod() {
         return "test method";
@@ -23,6 +28,6 @@ public class TestController
 
     @GetMapping("/test-2")
     public String test2Method() {
-        return "test-2 method";
+        return "test-2 method " + customEcsVariable;
     }
 }
