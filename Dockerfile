@@ -5,7 +5,7 @@ RUN mkdir /var/circleci-with-springboot
 ARG DEPENDENCY=build
 ADD ${DEPENDENCY}/libs/aws-ecs-circle-ci-0.0.1-SNAPSHOT.jar /var/circleci-with-springboot/circleciwithspringboot.jar
 
-EXPOSE 9090
+EXPOSE 9999
 
 ENV LISTEN_PORT=80
 
