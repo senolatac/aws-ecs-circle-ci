@@ -7,4 +7,6 @@ ADD ${DEPENDENCY}/libs/aws-ecs-circle-ci-0.0.1-SNAPSHOT.jar /var/circleci-with-s
 
 EXPOSE 9090
 
-ENTRYPOINT ["java","-jar","/var/circleci-with-springboot/circleciwithspringboot.jar"]
+ENV LISTEN_PORT=80
+
+ENTRYPOINT ["java", "--server.port=${LISTEN_PORT:-80}", "-jar","/var/circleci-with-springboot/circleciwithspringboot.jar"]
