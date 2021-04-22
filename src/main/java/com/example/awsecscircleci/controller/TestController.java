@@ -20,4 +20,9 @@ public class TestController
     public String test1Method() {
         return "test-1 method";
     }
+
+    @GetMapping("/test-2")
+    public String test2Method() {
+        return "test-2 method";
+    }
 }
