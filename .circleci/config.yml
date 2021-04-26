@@ -25,10 +25,6 @@ jobs:
               echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest-prod"' >> $BASH_ENV
             fi
       - run:
-          name: Version update
-          command: |
-            docker tag $FULL_IMAGE_NAME $FULL_IMAGE_PREVIOS_NAME
-      - run:
           name: Install dependencies for project
           command: gradle assemble
       - run:
@@ -47,6 +43,7 @@ jobs:
           command: |
             eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
             docker push $FULL_IMAGE_NAME
+            docker tag $FULL_IMAGE_NAME $FULL_IMAGE_PREVIOS_NAME
   update:
     docker:
       - image: circleci/openjdk:11-jdk
