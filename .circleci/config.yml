@@ -27,7 +27,7 @@ jobs:
       - run:
           name: Version update
           command: |
-            docker tag 526086769978.dkr.ecr.us-east-1.amazonaws.com/demo-circle-ci:latest-qa $FULL_IMAGE_PREVIOS_NAME
+            docker tag $FULL_IMAGE_NAME $FULL_IMAGE_PREVIOS_NAME
       - run:
           name: Install dependencies for project
           command: gradle assemble
