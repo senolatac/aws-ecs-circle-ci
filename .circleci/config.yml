@@ -14,10 +14,13 @@ jobs:
       - run:
           name: Setup common environment variables
           command: |
+            echo 'export SHORT_HASH="${CIRCLE_SHA1:0:7}"' >> $BASH_ENV
             echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
             if [ "${CIRCLE_BRANCH}" == "master" ]
             then
               echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest-qa"' >> $BASH_ENV
+              echo 'export FULL_IMAGE_PREVIOS_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:${SHORT_HASH}"' >> $BASH_ENV
+              docker tag $FULL_IMAGE_NAME $FULL_IMAGE_PREVIOS_NAME
             elif [ "${CIRCLE_BRANCH}" == "release" ]
             then
               echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest-prod"' >> $BASH_ENV
