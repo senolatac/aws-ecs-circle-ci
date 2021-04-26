@@ -37,13 +37,12 @@ jobs:
       - run:
           name: Build image
           command: |
-            docker build -t $FULL_IMAGE_NAME .
+            docker build -t $FULL_IMAGE_PREVIOS_NAME -t $FULL_IMAGE_NAME .
       - run:
           name: Push image
           command: |
             eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
             docker push $FULL_IMAGE_NAME
-            docker tag $FULL_IMAGE_NAME $FULL_IMAGE_PREVIOS_NAME
   update:
     docker:
       - image: circleci/openjdk:11-jdk
