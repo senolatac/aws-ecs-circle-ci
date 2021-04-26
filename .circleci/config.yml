@@ -42,7 +42,7 @@ jobs:
           name: Push image
           command: |
             eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-            docker push $FULL_IMAGE_NAME --all-tags
+            docker push --all-tags $FULL_IMAGE_NAME
   update:
     docker:
       - image: circleci/openjdk:11-jdk
