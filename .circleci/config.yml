@@ -2,7 +2,6 @@ version: 2.1
 orbs:
   aws-ecr: circleci/aws-ecr@7.0.0
   aws-ecs: circleci/aws-ecs@2.2.0
-  docker: circleci/docker@1.5.0
 
 jobs:
   build_and_deploy:
@@ -43,7 +42,7 @@ jobs:
           name: Push image
           command: |
             eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-            docker push -a $FULL_IMAGE_NAME
+            docker push $FULL_IMAGE_NAME
   update:
     docker:
       - image: circleci/openjdk:11-jdk
