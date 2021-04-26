@@ -20,11 +20,14 @@ jobs:
             then
               echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest-qa"' >> $BASH_ENV
               echo 'export FULL_IMAGE_PREVIOS_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:${SHORT_HASH}"' >> $BASH_ENV
-              docker tag $FULL_IMAGE_NAME $FULL_IMAGE_PREVIOS_NAME
             elif [ "${CIRCLE_BRANCH}" == "release" ]
             then
               echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest-prod"' >> $BASH_ENV
             fi
+      - run:
+          name: Version update
+          command: |
+            docker tag $FULL_IMAGE_NAME $FULL_IMAGE_PREVIOS_NAME
       - run:
           name: Install dependencies for project
           command: gradle assemble
