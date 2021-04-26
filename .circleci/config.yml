@@ -37,12 +37,17 @@ jobs:
       - run:
           name: Build image
           command: |
-            docker build -t $FULL_IMAGE_PREVIOS_NAME -t $FULL_IMAGE_NAME .
+            docker build -t $FULL_IMAGE_NAME .
       - run:
           name: Push image
           command: |
             eval $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
             docker push $FULL_IMAGE_NAME
+      - run:
+          name: Retagging
+          command: |
+            MANIFEST=$(aws ecr batch-get-image --repository-name ${AWS_RESOURCE_NAME_PREFIX} --image-ids imageTag=latest-qa --query 'images[].imageManifest' --output text)
+            aws ecr put-image --repository-name ${AWS_RESOURCE_NAME_PREFIX} --image-tag ${SHORT_HASH} --image-manifest "$MANIFEST"
   update:
     docker:
       - image: circleci/openjdk:11-jdk
